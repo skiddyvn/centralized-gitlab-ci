@@ -1,0 +1,1 @@
+Simplified multi-project Gitlab CI/CD on central repository use `includes` and `multi-project pipeline`

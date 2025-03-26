@@ -1,0 +1,3 @@
+include:
+  - project: path/to/project/upstream-central-repo
+    file: 'downstream-2/$CI_PROJECT_NAME/.gitlab-ci.yml'

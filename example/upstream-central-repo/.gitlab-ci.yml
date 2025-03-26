@@ -1,0 +1,3 @@
+include:
+  - local: "project-1/**/include.yml"
+  - local: "project-2/**/include.yml"

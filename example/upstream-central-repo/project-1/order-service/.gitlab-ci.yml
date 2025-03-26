@@ -1,0 +1,61 @@
+image: docker:19.03.12
+
+stages:
+  - build
+  - deploy
+
+variables:
+  UPSTREAM_COMMIT_SHA: ""
+  RUNTIME_IMAGE_TAG: runtime-$UPSTREAM_COMMIT_SHA-$CI_COMMIT_SHORT_SHA
+  RUNTIME_IMAGE: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:runtime-$UPSTREAM_COMMIT_SHA-$CI_COMMIT_SHORT_SHA
+  BUILDER_IMAGE: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME/builder:latest
+  APP_NAME: order-service
+
+.build_template:
+  stage: build
+  before_script:
+    - echo "Start to build $RUNTIME_IMAGE_TAG"
+  script:
+    - echo "Access container registry"
+    - echo "Build new image"
+
+build_staging:
+  extends: .build_template
+  environment:
+    name: staging
+  only:
+    - staging
+
+build_prod:
+  extends: .build_template
+  when: manual
+  allow_failure: false
+  environment:
+    name: production
+  only:
+    - release
+
+.deploy_k8s_template:
+  stage: deploy
+  image: alpine
+  script:
+    - echo "Deploy"
+  
+deploy_k8s_staging:
+  extends: .deploy_k8s_template
+  environment:
+    name: staging
+  variables:
+    GITOPS_VALUES_FILE: values.yaml
+  only:
+    - staging
+
+deploy_k8s_prod:
+  extends: .deploy_k8s_template
+  when: on_success
+  environment:
+    name: production
+  variables:
+    GITOPS_VALUES_FILE: values.yaml
+  only:
+    - release

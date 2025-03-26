@@ -1,0 +1,27 @@
+stages:
+  - trigger_staging
+  - trigger_production
+
+variables:
+  UPSTREAM_COMMIT_SHA: $CI_COMMIT_SHORT_SHA
+
+trigger_staging_order_service:
+  stage: trigger_staging
+  trigger:
+    project: "group/nested-group/order-service"
+    branch: "staging"
+    strategy: depend
+  rules:
+    - changes:
+      - order-service/.gitlab-ci.yml
+
+trigger_production_order_service:
+  stage: trigger_production
+  when: manual
+  trigger:
+    project: "group/nested-group/order-service"
+    branch: "main"
+    strategy: depend
+  rules:
+    - changes:
+      - order-service/.gitlab-ci.yml

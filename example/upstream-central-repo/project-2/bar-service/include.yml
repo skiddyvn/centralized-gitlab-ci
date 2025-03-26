@@ -13,7 +13,7 @@ trigger_staging_bar_service:
     strategy: depend
   rules:
     - changes:
-      - bar-service/.gitlab-ci.yml
+      - project-2/bar-service/.gitlab-ci.yml
 
 trigger_production_bar_service:
   stage: trigger_production
@@ -24,4 +24,4 @@ trigger_production_bar_service:
     strategy: depend
   rules:
     - changes:
-      - bar-service/.gitlab-ci.yml
+      - project-2/bar-service/.gitlab-ci.yml

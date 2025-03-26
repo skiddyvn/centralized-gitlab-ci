@@ -13,7 +13,7 @@ trigger_staging_user_service:
     strategy: depend
   rules:
     - changes:
-      - user-service/.gitlab-ci.yml
+      - project-1/user-service/.gitlab-ci.yml
 
 trigger_production_user_service:
   stage: trigger_production
@@ -24,4 +24,4 @@ trigger_production_user_service:
     strategy: depend
   rules:
     - changes:
-      - user-service/.gitlab-ci.yml
+      - project-1/user-service/.gitlab-ci.yml

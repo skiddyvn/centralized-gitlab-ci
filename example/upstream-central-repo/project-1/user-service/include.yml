@@ -13,7 +13,7 @@ trigger_staging_order_service:
     strategy: depend
   rules:
     - changes:
-      - order-service/.gitlab-ci.yml
+      - project-1/order-service/.gitlab-ci.yml
 
 trigger_production_order_service:
   stage: trigger_production
@@ -24,4 +24,4 @@ trigger_production_order_service:
     strategy: depend
   rules:
     - changes:
-      - order-service/.gitlab-ci.yml
+      - project-1/order-service/.gitlab-ci.yml
